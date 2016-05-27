@@ -38,4 +38,17 @@ function representacion(elemento,dim = 3)
     matriz(generarBase(dim),aplicacion(elemento,map(generarPerm,generarBase(dim))))
 end
 
+function aplicarRepre(vector)
+    dim =  length(vector)
+    resultados = Array{Float64,1}[]
+    for i in 1:factorial(dim)
+        push!(resultados,representacion(i,dim)*vector)
+    end
+    resultados
+end
+
+function aplicacionTotal(base)
+    map(aplicarRepre,base)
+end
+
 end

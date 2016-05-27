@@ -51,4 +51,15 @@ function aplicacionTotal(base)
     map(aplicarRepre,base)
 end
 
+function unos(dim)
+    vector = ones(dim)
+    demas = Array{Float64,1}[vector]
+        for i in 1:dim - 1 # dim -1
+        vector = -vector
+        vector[i] = dim - 1
+        push!(demas, vector)
+        vector = ones(dim)
+    end
+    demas
+end
 end

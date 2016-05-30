@@ -4,6 +4,8 @@ module RE
 
 export matriz, generarPerm, generarBase
 export aplicacion, representacion
+export aplicarRepre, aplicacionTotal, ortogonal
+export salidaRepre, protoBloque
 
 function matriz(base, aplicado)
     res = zeros(length(base), length(aplicado))
@@ -51,15 +53,28 @@ function aplicacionTotal(base)
     map(aplicarRepre,base)
 end
 
-function unos(dim)
+function ortogonal(dim)
     vector = ones(dim)
-    demas = Array{Float64,1}[vector]
+    demas = Array{Float64,1}[vector/norm(vector)]
         for i in 1:dim - 1 # dim -1
         vector = -vector
         vector[i] = dim - 1
-        push!(demas, vector)
+        push!(demas, vector/norm(vector))
         vector = ones(dim)
     end
+    @show demas
     demas
+end
+
+normalize(x) = x./sqrt(sumabs2(x, length(x)))
+
+function salidaRepre(salida, rep)
+    [x[rep] for x in salida]
+end
+function protoBloque(dim, rep)
+    nuevaBase = ortogonal(dim)
+    resultado = aplicacionTotal(nuevaBase)
+    representacion = [x[rep] for x in resultado]
+    matriz(nuevaBase, representacion)
 end
 end

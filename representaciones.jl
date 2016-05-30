@@ -62,7 +62,6 @@ function ortogonal(dim)
         push!(demas, vector/norm(vector))
         vector = ones(dim)
     end
-    @show demas
     demas
 end
 
@@ -72,9 +71,24 @@ function salidaRepre(salida, rep)
     [x[rep] for x in salida]
 end
 function protoBloque(dim, rep)
-    nuevaBase = ortogonal(dim)
-    resultado = aplicacionTotal(nuevaBase)
-    representacion = [x[rep] for x in resultado]
-    matriz(nuevaBase, representacion)
+    mat = transpose(matvec(dim))
+    repre = representacion(rep, dim)
+    inv(mat)*repre*mat
+end
+function matvec(dim)
+    res = zeros(Float64,dim,dim)
+    vector = ones(dim)
+    for i in 1:dim
+        res[1,i] = vector[i]/norm(vector)
+    end
+    for i in 2:dim # dim -1
+        vector = -vector
+        vector[i] = dim - 1
+        for j in 1:dim
+            res[i,j] = vector[j]/norm(vector)
+        end
+        vector = ones(dim)
+    end
+    res
 end
 end

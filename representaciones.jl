@@ -6,8 +6,8 @@ export matriz, generarPerm, generarBase
 export aplicacion, representacion
 export aplicarRepre, aplicacionTotal, ortogonal
 export salidaRepre, protoBloque
-export unoRegular, regular
-export Permutacion
+export unoRegular, regular, generartipoPerm
+export Permutacion, matvec
 
 type Permutacion
     perm :: Array{Int64,1}

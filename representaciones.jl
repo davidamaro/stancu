@@ -99,9 +99,9 @@ function matvec(dim)
     res
 end
 function unoRegular(elemento, n)
-    original = generarPerm(1:n)
+    original = generartipoPerm(1:n)
     matricita = zeros(factorial(n), factorial(n))
-    reservoir = map(generarPerm,collect(permutations(1:n)))
+    reservoir = map(generartipoPerm,collect(permutations(1:n)))
     for i in 1:factorial(n)
         for juas in original
             if reservoir[elemento][i].perm == juas.perm
@@ -118,5 +118,13 @@ function regular(n)
         push!(matrices,unoRegular(i,n))
     end
     matrices
+end
+function generartipoPerm(rango)
+    valores = collect(permutations(rango))
+    sostén = Permutacion[]
+    for i in 1:length(valores)
+        push!(sostén, Permutacion(valores[i],i))
+    end
+    sostén
 end
 end

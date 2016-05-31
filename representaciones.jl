@@ -6,6 +6,13 @@ export matriz, generarPerm, generarBase
 export aplicacion, representacion
 export aplicarRepre, aplicacionTotal, ortogonal
 export salidaRepre, protoBloque
+export unoRegular, regular
+export Permutacion
+
+type Permutacion
+    perm :: Array{Int64,1}
+    num :: Int64
+end
 
 function matriz(base, aplicado)
     res = zeros(length(base), length(aplicado))
@@ -90,5 +97,26 @@ function matvec(dim)
         vector = ones(dim)
     end
     res
+end
+function unoRegular(elemento, n)
+    original = generarPerm(1:n)
+    matricita = zeros(factorial(n), factorial(n))
+    reservoir = map(generarPerm,collect(permutations(1:n)))
+    for i in 1:factorial(n)
+        for juas in original
+            if reservoir[elemento][i].perm == juas.perm
+                matricita[reservoir[elemento][i].num, juas.num] = 1
+            end
+        end
+    end
+    matricita
+end
+
+function regular(n)
+    matrices = Array{Float64,2}[]
+    for i in 1:factorial(n)
+        push!(matrices,unoRegular(i,n))
+    end
+    matrices
 end
 end
